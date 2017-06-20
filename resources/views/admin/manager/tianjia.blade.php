@@ -82,9 +82,9 @@
 	</div>
 
 
-	<script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
-	<script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js"> </script>
-	<script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
+	<script type="text/javascript" charset="utf-8" src="http://localhost:8888/laravel54/Public/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8" src="http://localhost:8888/laravel54/Public/ueditor/ueditor.all.min.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="http://localhost:8888/laravel54/Public/ueditor/lang/zh-cn/zh-cn.js"></script>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3">备注：</label>
 		<div class="formControls col-xs-8 col-sm-9">
