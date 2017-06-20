@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 class IndexContriller extends Controller
 {
-    //
+    //index
     public function index(){
         return view('home.index.index');
     }
