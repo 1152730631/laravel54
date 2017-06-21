@@ -25,11 +25,12 @@
 </head>
 <body>
 <article class="page-container">
+	{{--提交表单start--}}
 	<form class="form form-horizontal" id="form-admin-add">
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="adminName" name="adminName">
+			<input type="text" class="input-text" value="" placeholder="" id="username" name="username">
 		</div>
 	</div>
 	<div class="row cl">
@@ -41,18 +42,18 @@
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认密码：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="password" class="input-text" autocomplete="off"  placeholder="确认新密码" id="password2" name="password2">
+			<input type="password" class="input-text" autocomplete="off"  placeholder="确认新密码" id="password_confirmation" name="password_confirmation">
 		</div>
 	</div>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
 		<div class="formControls col-xs-8 col-sm-9 skin-minimal">
 			<div class="radio-box">
-				<input name="sex" type="radio" id="sex-1" checked>
+				<input name="mg_sex" type="radio" id="sex-1" checked>
 				<label for="sex-1">男</label>
 			</div>
 			<div class="radio-box">
-				<input type="radio" id="sex-2" name="sex">
+				<input type="radio" id="sex-2" name="mg_sex">
 				<label for="sex-2">女</label>
 			</div>
 		</div>
@@ -60,19 +61,19 @@
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="phone" name="phone">
+			<input type="text" class="input-text" value="" placeholder="" id="mg_phone" name="mg_phone">
 		</div>
 	</div>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>邮箱：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" placeholder="@" name="email" id="email">
+			<input type="text" class="input-text" placeholder="@" name="mg_email" id="mg_email">
 		</div>
 	</div>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3">角色：</label>
 		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
-			<select class="select" name="adminRole" size="1">
+			<select class="select" name="mg_role_ids" size="1">
 				<option value="0">超级管理员</option>
 				<option value="1">总编</option>
 				<option value="2">栏目主辑</option>
@@ -88,7 +89,7 @@
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3">备注：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<textarea name="remark" id="remark" style="width:550px;height:110px;" class="textarea" ></textarea>
+			<textarea name="mg_remark" id="mg_remark" style="width:550px;height:110px;" class="textarea" ></textarea>
 			<p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
 		</div>
 	</div>
@@ -108,6 +109,17 @@
 			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
 		</div>
 	</div>
+
+		{{--CSRF 跨站请求伪造
+		模拟用户的身份,进行非法请求
+		laravel 可以对安全问题进行限制
+		<input type="hidden" name="__token" value="加密串">
+		--}}
+
+		{{ csrf_field() }}
+		{{ csrf_token() }}
+
+
 	</form>
 </article>
 
@@ -128,7 +140,43 @@ $(function(){
 		radioClass: 'iradio-blue',
 		increaseArea: '20%'
 	});
-	
+
+	$("#form-admin-add").submit(function(evt){
+
+		evt.preventDefault();
+		var shuju = $(this).serialize();
+
+
+
+		$.ajax({
+			url:'http://localhost:8888/laravel54/Public/admin/manager/tianjia',
+			data:shuju,
+			type: 'post',
+			dataType:'json',
+			success: function (msg) {
+				console.log(msg);
+
+				if(msg.success === true){
+					//a提示成功信息,b关闭当前添加页,c父级列表页刷新
+					layer.msg('添加成功!',function(index){
+						parent.window.location.href = parent.window.location.href;
+						layer_close(); //关闭当前页
+					});
+				}else{
+					//提示失败信息
+					layer.msg('error!',{icon:5,time:1000});
+				}
+			},
+
+			error:function(XmlHttpRequest, textStatus, errorThrown){
+				layer.msg('error!',{icon:5,time:1000});
+			}
+
+		})
+
+	});
+
+	/*
 	$("#form-admin-add").validate({
 		rules:{
 			adminName:{
@@ -176,7 +224,7 @@ $(function(){
 			parent.$('.btn-refresh').click();
 			parent.layer.close(index);
 		}
-	});
+	});*/
 });
 </script> 
 <!--/请在上方写此页面业务相关的脚本-->

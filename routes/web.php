@@ -26,5 +26,5 @@ Route::get('admin/index','Admin\IndexController@index');
 Route::get('admin/index/welcome','Admin\IndexController@welcome');
 
 Route::get('admin/manager/showlist','Admin\ManagerController@showlist');
-
-Route::get('admin/manager/tianjia','Admin\ManagerController@tianjia');
+//后台管理员:添加
+Route::match(['get','post'],'admin/manager/tianjia','Admin\ManagerController@tianjia');
