@@ -29,7 +29,6 @@ class ManagerController extends Controller
          */
         $info = Manager::get();
 
-
         /**
          * 在laravel框架中有函数dd() 可以把一些信息格式化后断点输出
          */
