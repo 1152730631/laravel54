@@ -72,24 +72,66 @@ class ManagerController extends Controller
          * $request -> isMethod('post'); 判断当前是否是post请求
          *
          */
+        //var_dump($request);exit;
+       if( $request -> isMethod('post')){
+           //echo 111;exit;
+           $shuju = $request->except(['_token']);
 
-        if($request -> isMethod('post')){
-            //收集数据,存储入库
-            /*
-            * 在laravel 框架中有自己的密码加密机制(登录时也用该)
-            */
-            $shuju = $request->all();
 
-            $shuju['password'] = bcrypt($shuju['password']);//加密处理
+           //echo $shuju['password'];exit;
             if(Manager::create($shuju)){
                 return ['success'=>true];  //array()  会返回json格式，自动json转化
             }else{
                 return ['success'=>false];  //array()
             }
 
-        }else{
-            //展示监听管理员的表单效果
-            return view('admin/manager/tianjia');
-        }
+
+       }else {
+           return view('admin/manager/tianjia');
+       }
+
+
+
+        //if($request -> isMethod('post')){
+            //收集数据,存储入库
+            /*
+            * 在laravel 框架中有自己的密码加密机制(登录时也用该)
+            */
+            //var_dump($request);exit;
+            //$shuju = $request->all();
+            //echo $shuju;exit;
+//            $shuju['password'] = bcrypt($shuju['password']);//加密处理
+//            if(Manager::create($shuju)){
+//                return ['success'=>true];  //array()  会返回json格式，自动json转化
+//            }else{
+//                return ['success'=>false];  //array()
+//            }
+
+
+
+//        }else{
+//            //展示监听管理员的表单效果
+
+//        }
     }
+
+    /**
+     * @param Request $requers
+     * @param Manager $manager 通过$manager对象来接收传递过来的参数id
+     * laravel 内部会根据id为条件 把对应的数据查询出来并传递
+     * 给$manager直接传递给模板去显示
+     *
+     * 注意 $manager 要与路由参数的 manager 保持一致
+     */
+    public function xiugai(Request $request ,Manager $manager){
+
+//        if($request -> isMethod('post')){
+//
+//        }else{
+//
+//        }
+
+        return view('admin/manager/xiugai',['manager' => $manager]);
+    }
+
 }

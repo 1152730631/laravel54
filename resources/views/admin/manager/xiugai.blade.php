@@ -7,53 +7,52 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <!--[if lt IE 9]>
-<script type="text/javascript" src="/admin/lib/html5shiv.js"></script>
-<script type="text/javascript" src="/admin/lib/respond.min.js"></script>
+<script type="text/javascript" src="http://localhost:8888/laravel54/Public/admin/lib/html5shiv.js"></script>
+<script type="text/javascript" src="http://localhost:8888/laravel54/Public/admin/lib/respond.min.js"></script>
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="/admin/static/h-ui/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="/admin/static/h-ui.admin/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="/admin/lib/Hui-iconfont/1.0.8/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="/admin/static/h-ui.admin/skin/default/skin.css" id="skin" />
-<link rel="stylesheet" type="text/css" href="/admin/static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="http://localhost:8888/laravel54/Public/admin/static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="http://localhost:8888/laravel54/Public/admin/static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="http://localhost:8888/laravel54/Public/admin/lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="http://localhost:8888/laravel54/Public/admin/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="http://localhost:8888/laravel54/Public/admin/static/h-ui.admin/css/style.css" />
 <!--[if IE 6]>
-<script type="text/javascript" src="/admin/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script type="text/javascript" src="http://localhost:8888/laravel54/Public/admin/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>添加管理员 - 管理员管理 - H-ui.admin v2.4</title>
+<title>修改管理员 - 管理员管理 - H-ui.admin v2.4</title>
 <meta name="keywords" content="H-ui.admin v3.0,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
 <meta name="description" content="H-ui.admin v3.0，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
 </head>
 <body>
 <article class="page-container">
+	{{--提交表单start--}}
 	<form class="form form-horizontal" id="form-admin-add">
-	{{ csrf_field() }}
+
+		{{--CSRF 跨站请求伪造
+		模拟用户的身份,进行非法请求
+		laravel 可以对安全问题进行限制
+		<input type="hidden" name="__token" value="加密串">
+		--}}
+
+		{{ csrf_field() }}
+
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="username" name="username">
+			<input type="text" class="input-text" value="<?php echo $manager->username?>" placeholder="" id="username" name="username" >
 		</div>
 	</div>
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>初始密码：</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<input type="password" class="input-text" autocomplete="off" value="" placeholder="密码" id="password" name="password">
-		</div>
-	</div>
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认密码：</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<input type="password" class="input-text" autocomplete="off"  placeholder="确认新密码" id="password_confirmation" name="password_confirmation">
-		</div>
-	</div>
+
+
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
 		<div class="formControls col-xs-8 col-sm-9 skin-minimal">
 			<div class="radio-box">
-				<input name="mg_sex" type="radio" id="mg_sex" checked value="男">
+				<input name="mg_sex" type="radio" id="sex-1" checked>
 				<label for="sex-1">男</label>
 			</div>
 			<div class="radio-box">
-				<input name="mg_sex" type="radio" id="mg_sex" value="女">
+				<input type="radio" id="sex-2" name="mg_sex">
 				<label for="sex-2">女</label>
 			</div>
 		</div>
@@ -61,7 +60,7 @@
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="mg_phone" name="mg_phone">
+			<input type="text" class="input-text" value="<?php echo $manager->mg_phone?>" placeholder="" id="mg_phone" name="mg_phone">
 		</div>
 	</div>
 	<div class="row cl">
@@ -83,9 +82,9 @@
 	</div>
 
 
-	<script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
-	<script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js"> </script>
-	<script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
+	<script type="text/javascript" charset="utf-8" src="http://localhost:8888/laravel54/Public/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="utf-8" src="http://localhost:8888/laravel54/Public/ueditor/ueditor.all.min.js"> </script>
+	<script type="text/javascript" charset="utf-8" src="http://localhost:8888/laravel54/Public/ueditor/lang/zh-cn/zh-cn.js"></script>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3">备注：</label>
 		<div class="formControls col-xs-8 col-sm-9">
@@ -94,7 +93,7 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-        var ue = UE.getEditor('mg_remark',{toolbars: [[
+        var ue = UE.getEditor('remark',{toolbars: [[
             'fullscreen', 'source', '|', 'undo', 'redo', '|',
             'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|'
         ]]});
@@ -109,58 +108,69 @@
 			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
 		</div>
 	</div>
+
+
+
 	</form>
 </article>
 
 <!--_footer 作为公共模版分离出去--> 
-<script type="text/javascript" src="/admin/lib/jquery/1.9.1/jquery.min.js"></script> 
-<script type="text/javascript" src="/admin/lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="/admin/static/h-ui/js/H-ui.min.js"></script> 
-<script type="text/javascript" src="/admin/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="http://localhost:8888/laravel54/Public/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://localhost:8888/laravel54/Public/admin/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="http://localhost:8888/laravel54/Public/admin/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="http://localhost:8888/laravel54/Public/admin/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="/admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
-<script type="text/javascript" src="/admin/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
-<script type="text/javascript" src="/admin/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+<script type="text/javascript" src="http://localhost:8888/laravel54/Public/admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="http://localhost:8888/laravel54/Public/admin/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="http://localhost:8888/laravel54/Public/admin/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
 $(function(){
-
-
-    $('.skin-minimal input').iCheck({
+	$('.skin-minimal input').iCheck({
 		checkboxClass: 'icheckbox-blue',
 		radioClass: 'iradio-blue',
 		increaseArea: '20%'
 	});
 
-	//给添加form表单设置submit事件
-	$('#form-admin-add').submit(function(evt){
-	    //ajax方式提交form表单信息给服务器
-		evt.preventDefault(); //阻止浏览器form表单提交
-		//收集form表单的信息为 username=xxx&password=xxx&mg_email=xxx...
-		var shuju = $(this).serialize();
-		//执行ajax
-		$.ajax({
-			url:'/admin/manager/tianjia',
-			data:shuju,
-			dataType:'json',
-			type:'post',
-			success:function(msg){
-			    //alert(msg);  //{'success':true/false}
-				if(msg.success === true){
-					//a提示成功信息、b关闭当前的添加页、c父级列表页刷新
-                    layer.alert('添加成功', function(){
-                        parent.window.location.href = parent.window.location.href; //父页面刷新
-                        layer_close();  //关闭当前添加页
-					});
-                }else{
-					//a提示失败信息
-                    layer.alert('添加失败', {icon: 5});  //icon:1/2/3/4/5  设置表情
-                }
-			}
-		});
+	$("#form-admin-add").submit(function(evt){
+
+			evt.preventDefault();
+			var shuju = $(this).serialize();
+
+			alert(shuju);
+
+//			$.ajax({
+//				url:'http://localhost:8888/laravel54/Public/admin/manager/tianjia',
+//				data:shuju,
+//				type: 'post',
+//				dataType:'json',
+//				success: function (msg) {
+//
+//					console.log(msg);
+//
+//					if(msg.success === true){
+//						//a提示成功信息,b关闭当前修改页,c父级列表页刷新
+//						layer.msg('修改成功!',function(index){
+//							parent.window.location.href = parent.window.location.href;
+//							layer_close(); //关闭当前页
+//						});
+//					}else{
+//						//提示失败信息
+//						layer.msg('error!',{icon:5,time:1000});
+//					}
+//				},
+//
+//				error:function(XmlHttpRequest, textStatus, errorThrown){
+//					console.log(textStatus);
+//					console.log(errorThrown);
+//					layer.msg('error!',{icon:5,time:1000});
+//				}
+//
+//			})
+
 	});
 
-	/**
+	/*
 	$("#form-admin-add").validate({
 		rules:{
 			adminName:{
@@ -198,7 +208,7 @@ $(function(){
 				type: 'post',
 				url: "xxxxxxx" ,
 				success: function(data){
-					layer.msg('添加成功!',{icon:1,time:1000});
+					layer.msg('修改成功!',{icon:1,time:1000});
 				},
                 error: function(XmlHttpRequest, textStatus, errorThrown){
 					layer.msg('error!',{icon:1,time:1000});
@@ -208,8 +218,7 @@ $(function(){
 			parent.$('.btn-refresh').click();
 			parent.layer.close(index);
 		}
-	});
-	*/
+	});*/
 });
 </script> 
 <!--/请在上方写此页面业务相关的脚本-->

@@ -27,4 +27,12 @@ Route::get('admin/index/welcome','Admin\IndexController@welcome');
 
 Route::get('admin/manager/showlist','Admin\ManagerController@showlist');
 //后台管理员:添加
-Route::match(['get','post'],'admin/manager/tianjia','Admin\ManagerController@tianjia');
+Route::any('admin/manager/tianjia','Admin\ManagerController@tianjia');
+
+//修改管理员
+/**
+ * 路由参数{manager}
+ * 在控制器中要对路由的参数进行接收
+ *
+ */
+Route::match(['get','post'],'admin/manager/xiugai/{manager}','Admin\ManagerController@xiugai');
