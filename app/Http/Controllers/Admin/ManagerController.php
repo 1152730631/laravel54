@@ -15,7 +15,32 @@ class ManagerController extends Controller
     }
 
     public function showlist(){
-        return view('admin/manager/showlist');
+        //Manager::get() 获取全部的数据表信息
+        //Manager::fitst() 获取一条数据
+        //Manager::fitst()
+
+
+        /**
+         * 调用get方法获得manager数据表中的全部信息
+         * get()方法会返回一个collection集合对象,对象里面有成员,每个
+         * 成员是一个独立的记录信息 这个成员的类型是manager对象
+         * 这个collection 可以进行遍历,会把每一条数据遍历处理
+         *
+         */
+        $info = Manager::get();
+
+
+        /**
+         * 在laravel框架中有函数dd() 可以把一些信息格式化后断点输出
+         */
+        //dd($info);
+
+        /*
+        * 调用view()函数可以展示模块 ,也可以给模板传递信息
+        * return view('模板名称,模板')
+        * retrun view()
+        */
+        return view('admin/manager/showlist',['info'=> $info]);
     }
 
 
@@ -50,27 +75,16 @@ class ManagerController extends Controller
 
         if($request -> isMethod('post')){
             //收集数据,存储入库
-            //$request -> all();
-
             /*
             * 在laravel 框架中有自己的密码加密机制(登录时也用该)
             */
             $shuju = $request->all();
 
-            //$shuju['password'] = Crypt::();
-
-
-
-            /*
-            $obj = new Manager();
-            $obj->username = $request->input('username');
-            $obj->save();*/
-
-            if(Manager::create($shuju)) {
-                return ['success' => true]; // 会返回json格式,自动转换json
+            $shuju['password'] = bcrypt($shuju['password']);//加密处理
+            if(Manager::create($shuju)){
+                return ['success'=>true];  //array()  会返回json格式，自动json转化
             }else{
-                //return ;
-                return ['success' => false];
+                return ['success'=>false];  //array()
             }
 
         }else{

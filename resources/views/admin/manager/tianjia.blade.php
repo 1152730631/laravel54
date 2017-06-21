@@ -27,6 +27,15 @@
 <article class="page-container">
 	{{--提交表单start--}}
 	<form class="form form-horizontal" id="form-admin-add">
+
+		{{--CSRF 跨站请求伪造
+		模拟用户的身份,进行非法请求
+		laravel 可以对安全问题进行限制
+		<input type="hidden" name="__token" value="加密串">
+		--}}
+
+		{{ csrf_field() }}
+
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员：</label>
 		<div class="formControls col-xs-8 col-sm-9">
@@ -110,14 +119,6 @@
 		</div>
 	</div>
 
-		{{--CSRF 跨站请求伪造
-		模拟用户的身份,进行非法请求
-		laravel 可以对安全问题进行限制
-		<input type="hidden" name="__token" value="加密串">
-		--}}
-
-		{{ csrf_field() }}
-		{{ csrf_token() }}
 
 
 	</form>
@@ -151,7 +152,7 @@ $(function(){
 		$.ajax({
 			url:'http://localhost:8888/laravel54/Public/admin/manager/tianjia',
 			data:shuju,
-			type: 'post',
+			type: 'POST',
 			dataType:'json',
 			success: function (msg) {
 				console.log(msg);
