@@ -137,4 +137,16 @@ class ManagerController extends Controller
         return view('admin/manager/xiugai',['manager'=>$manager]);
     }
 
+
+    public function del(Manager $manager){
+
+        if($manager -> delete()){
+            return ['success'=>true];
+        }else {
+            return ['success' => false];
+        }
+
+
+    }
+
 }

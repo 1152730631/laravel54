@@ -36,3 +36,8 @@ Route::any('admin/manager/tianjia','Admin\ManagerController@tianjia');
  *
  */
 Route::match(['get','post'],'admin/manager/xiugai/{manager}','Admin\ManagerController@xiugai');
+
+//后台管理员:删除`
+Route::post('admin/manager/del/{manager}','Admin\ManagerController@del');
+
+

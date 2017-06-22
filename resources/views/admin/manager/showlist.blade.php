@@ -65,7 +65,7 @@
 			<td><?php echo $v->mg_role_ids; ?></td>
 			<td><?php echo $v->created_at; ?></td>
 				<td class="td-status"><span class="label label-success radius">已启用</span></td>
-				<td class="td-manage"><a style="text-decoration:none" onClick="admin_stop(this,'10001')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','http://localhost:8888/admin/manager/xiugai/<?php echo $v->mg_id; ?>','1','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+				<td class="td-manage"><a style="text-decoration:none" onClick="admin_stop(this,'10001')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','http://localhost:8888/admin/manager/xiugai/<?php echo $v->mg_id; ?>','1','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_del(this,'<?php echo $v->mg_id; ?>')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 			</tr>
 		<?php } ?>
 
@@ -100,7 +100,10 @@ function admin_del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'POST',
-			url: '',
+			url: '/admin/manager/del/'+id,
+			headers:{
+				'X-CSRF-TOKEN':"<?php echo csrf_token(); ?>"
+			},
 			dataType: 'json',
 			success: function(data){
 				$(obj).parents("tr").remove();
@@ -108,8 +111,9 @@ function admin_del(obj,id){
 			},
 			error:function(data) {
 				console.log(data.msg);
+				layer.msg('删除失败!',{icon:5,time:1000});
 			},
-		});		
+		});
 	});
 }
 
