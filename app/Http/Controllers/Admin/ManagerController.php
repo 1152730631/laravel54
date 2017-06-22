@@ -122,15 +122,19 @@ class ManagerController extends Controller
      *
      * 注意 $manager 要与路由参数的 manager 保持一致
      */
+
     public function xiugai(Request $request ,Manager $manager){
 
-//        if($request -> isMethod('post')){
-//
-//        }else{
-//
-//        }
+        if($request -> isMethod('post')){
+             $info = $request->all();
+            if($manager->update($info)){
+                return ['success' => true];
+            }else{
+                return ['success' => false];
+            }
 
-        return view('admin/manager/xiugai',['manager' => $manager]);
+        }
+        return view('admin/manager/xiugai',['manager'=>$manager]);
     }
 
 }
