@@ -45,7 +45,7 @@ class ManagerController extends Controller
 //        Manager::select()->groupBy('mg_sex')->get();
 
         //dd(Manager::where('mg_id','>','2')->count());
-        dd(Manager::where('mg_id','>','2')->sum());
+        //dd(Manager::where('mg_id','>','2')->sum());
 //        Manager::where('mg_id','<','2')->avg();
 //        Manager::where('mg_id','<','2')->max();
 
@@ -59,7 +59,9 @@ class ManagerController extends Controller
         * return view('模板名称,模板')
         * retrun view()
         */
-        return view('admin/manager/showlist',['info'=> $info]);
+        $color = ['c1'=>'111','c2'=>'2222'];
+
+        return view('admin/manager/showlist',compact('color','info'));
     }
 
 
