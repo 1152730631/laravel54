@@ -14,6 +14,6 @@ class Manager extends Model
     protected $fillable = ['username','password','mg_role_ids','mg_sex','mg_phone','mg_email','mg_remark'];
 
     use SoftDeletes;
-    protected $data = ['deleted_at'];
+    protected $abc = ['deleted_at'];
 
 }

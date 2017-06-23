@@ -29,6 +29,26 @@ class ManagerController extends Controller
          */
         $info = Manager::get();
 
+//        Manager::select('username','password')->get();
+//        Manager::select()->where('mg_email','like','guan%')->get();
+//        Manager::select()->where('mg_email','tianqi@163.com')->get();
+
+        //或的where条件设置
+        //Manager::select()->where('mg_id','>=',8)->orWhere('mg_id','<=',4);
+        //且关系查询 多个where连贯操作
+        //$info1 = Manager::select()->where('mg_id','>=',1)->where('useranem','like','%j%');
+//        Manager::select('mg_id','username')->get();
+//        Manager::select('mg_id','username')->where('mg_id','>=',2)->get();
+//        Manager::select('mg_id','username')->where('mg_id','>=',2)->where('mg_username','like','%j%')->git();
+//
+//        Manager::select('mg_id','username')->orderBy('mg_id','desc')->get();
+//        Manager::select()->groupBy('mg_sex')->get();
+
+        //dd(Manager::where('mg_id','>','2')->count());
+        dd(Manager::where('mg_id','>','2')->sum());
+//        Manager::where('mg_id','<','2')->avg();
+//        Manager::where('mg_id','<','2')->max();
+
         /**
          * 在laravel框架中有函数dd() 可以把一些信息格式化后断点输出
          */
