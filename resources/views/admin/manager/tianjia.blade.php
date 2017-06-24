@@ -90,6 +90,14 @@
 			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
 		</div>
 	</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>上传头像：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="file" class="input-file" autocomplete="off"  placeholder="确认新密码" id="password_confirmation" name="password_confirmation">
+			</div>
+		</div>
+
 	</form>
 </article>
 

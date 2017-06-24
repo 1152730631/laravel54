@@ -60,6 +60,9 @@
 
 		</tbody>
 	</table>
+	
+	{{ $info->links() }}
+
 </div>
 <!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/admin/lib/jquery/1.9.1/jquery.min.js"></script>

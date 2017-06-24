@@ -4,8 +4,8 @@ namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-class Manager extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+class Manager extends Authenticatable
 {
     protected $table = "manager";   //设置表名
     protected $primaryKey = "mg_id";//设置主键

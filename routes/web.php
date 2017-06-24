@@ -19,7 +19,7 @@ Route::get('/','Home\IndexContriller@index');
 
 Route::get('Home/student/login','Home\StudentController@login');
 
-Route::get('admin/manager/login','Admin\ManagerController@login');
+Route::match(['get','post'],'admin/manager/login','Admin\ManagerController@login');
 
 Route::get('admin/index','Admin\IndexController@index');
 

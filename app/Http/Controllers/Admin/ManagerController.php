@@ -12,54 +12,55 @@ use Illuminate\Support\Facades\Validator;
 class ManagerController extends Controller
 {
 
-    public function login(Request $request){
-
+    public function login(Request $request)
+    {
         if($request->isMethod('post')){
 
-            //用户名和密码 非空校验
-            //验证码非空正确校验
-
+            //用户名和密码 非空 校验
+            //验证码非空、正确 校验
             $rules = [
                 'username' => 'required',
-                'pussword' => 'required',
-                'verify_code' => 'required|captcha'
+                'password' => 'required'
+                //'verify_code' => 'required|captcha',
             ];
-
             $notices = [
                 'username.required' => '用户名必填',
+                'password.required' => '密码必填',
+                //'verify_code.required' => '验证码必填',
+                //'verify_code.captcha' => '验证码不正确',
             ];
 
-            $validator = Validator::make($request->all(),$rules,$notices);
+            $name = $request->input('username');
+            $pwd  = $request->input('password');
 
-            if($validator->passes()) {
-                //            $username = $request->input('username');
-                //            $password = $request->input('password');
-                $re = $request->only('username', 'password');
 
-                if (Auth::guard('hou')->attempt($re)) {
-                    //echo 'ok';exit;
+
+            //制作验证
+            $validator = Validator::make(['username'=>$name,'password'=>$pwd],$rules,$notices);
+            //判断验证
+            if($validator->passes()){
+                //去数据库校验用户名和密码
+                $name = $request->input('username');
+                $pwd  = $request->input('password');
+                //Auth限定使用的guard，并调用attempt()方法校验用户名和密码
+                if(Auth::guard('admin')->attempt(['username'=>$name,'password'=>$pwd])){
                     return redirect('admin/index');
-                } else {
-                    //echo 'on';exit;
-                    /**
-                     * ① 显示错误信息
-                     * withErrors() 代表要个回跳地址传递,一次性session的错误信息
-                     * 在模板中使用$errors访问 例如{{$errors->first('errorsinfo')}}
-                     * ② 传递用户信息
-                     * withInput() 会把当前传递过来的form表单信息回传回去
-                     * 在模板中通过{{old(名称)}} 的格式来使用
-                     */
-                    return redirect('admin/manager/login')->withErrors(['errorinfo' => '用户名或密码错误'])
+                }else{
+                    return redirect('admin/manager/login')
+                        ->withErrors(['errorinfo'=>'用户名或密码错误'])
                         ->withInput();
                 }
-            }else {
-                return redirect('admin/manager/login')->withErrors($validator)
+            }else{
+                //调回到之前的login登录页面，同时把相关的错误信息 和 用户输入信息返回
+                return redirect('admin/manager/login')
+                    ->withErrors($validator)
                     ->withInput();
             }
-        }else {
+        }else{
             return view('admin/manager/login');
         }
     }
+
 
     public function showlist(){
         //Manager::get() 获取全部的数据表信息
@@ -112,7 +113,13 @@ class ManagerController extends Controller
          * ① 调用属性方式:被动方式,数据使用就立即通过sql语句查询 不使用查询
          * ② with()方式 无论role关系是否实现,都要用sql查询出来 该方式更加节省资源
          */
-        $info = Manager::with('role')->get();
+
+        //$info = Manager::with('role')->get();
+
+        /*
+         * 制作数据分页
+         */
+        $info = Manager::with('role')->paginate(3);
 
         return view('admin/manager/showlist',compact('info'));
     }
@@ -194,13 +201,15 @@ class ManagerController extends Controller
 
 
            $rules = [
-               'username' => 'required',
-               'password' => 'required'
+               'username' => 'required|min:4',
+               'password' => 'required|min:4'
            ];
 
            $notices = [
                'username.required' => '用户名必须填写',
-               'password.required' => '密码必须填写'
+               'username.min' => '用户名位数不能少于4位',
+               'password.required' => '密码必须填写',
+               'password.min' => '密码位数不能少于4位'
            ];
 
            $validator = Validator::make($request->all(),$rules,$notices);
@@ -209,8 +218,6 @@ class ManagerController extends Controller
 
                $shuju = $request->except(['_token']);
                $shuju['password'] = bcrypt($shuju['password']);
-               dd($shuju);
-               //echo $shuju['password'];exit;
                Manager::create($shuju);
                return ['success'=>true];
 
