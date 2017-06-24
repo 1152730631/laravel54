@@ -5,13 +5,39 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Models\Manager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Validator;
 
 class ManagerController extends Controller
 {
 
-    public function login(){
-        return view('admin/manager/login');
+    public function login(Request $request){
+
+        if($request->isMethod('post')){
+//            $username = $request->input('username');
+//            $password = $request->input('password');
+            $re = $request->only('username','password');
+
+            if(Auth::guard('hou')->attempt($re)){
+                //echo 'ok';exit;
+                return redirect('admin/index');
+            }else{
+                //echo 'on';exit;
+                /**
+                 * ① 显示错误信息
+                 * withErrors() 代表要个回跳地址传递,一次性session的错误信息
+                 * 在模板中使用$errors访问 例如{{$errors->first('errorsinfo')}}
+                 * ② 传递用户信息
+                 * withInput() 会把当前传递过来的form表单信息回传回去
+                 * 在模板中通过{{old(名称)}} 的格式来使用
+                 */
+                return redirect('admin/manager/login')->withErrors(['errorinfo'=>'用户名或密码错误'])
+                    ->withInput();
+            }
+        }else {
+            return view('admin/manager/login');
+        }
     }
 
     public function showlist(){
@@ -93,19 +119,78 @@ class ManagerController extends Controller
          * $request -> isMethod('post'); 判断当前是否是post请求
          *
          */
-        //var_dump($request);exit;
+
        if( $request -> isMethod('post')){
-           //echo 111;exit;
-           $shuju = $request->except(['_token']);
+
+           /**
+            * 定义 rules 验证规则
+            *
+            * $rules = [
+            *   字段名称 => '规则|规则|规则...'
+            * ]
+            *
+            * 规则 ①: unique 字段唯一 用法: unique:表名,字段名称[,区别id,主键id]
+            *   'username' => 'unique:manager,username'
+            *
+            *
+            *   修改form表单 字段唯一
+            *   注意:要判断 我本身的名字 和 id 与 我当前修改的id是否一致 如果一致即可修改
+            *   unique:manager,username,12
+            *
+            *    如果数据表主键名称不是id 可以通过第4个内容进行限制
+            *    unique:manager,username,12,mg_id
+            *
+            *
+            * 规则 ②: min:数字
+            *   校验输入信息位数不能小于多个字符
+            *   'username' => 'min:4'
+            *
+            *   confirmed 校验两个字段内容是否一致 常用密码和确认密码
+            *   字段名称: password 和 password_confirmation
+            *   'password' => 'confirmed'
+            *   password 内容会自动与 'password_confirmation'的内容做比较
+            *   第二个字段名称比第一个字段名称多 '_confirmation'
+            *
+            * 规则 ③: accepted校验bool值 用于判断协议
+            * 规则 ④: after:date 判断日期在date之后
+            *   'birthday' => "before:"1990-12-17
+            *
+            * 规则 ⑤: array: 判断内容数组
+            * 规则 ⑥: date: 判断内容是日期
+            * 规则 ⑦: email: 判断邮箱
+            * 规则 ⑧: in:12,13,13 内容范围判断
+            * 规则 ⑨: ip ip判断
+            * 规则 10: numeric 数组判断
+            * 规则 11: regex 正则判断
+            *
+            */
 
 
-           //echo $shuju['password'];exit;
-            if(Manager::create($shuju)){
-                return ['success'=>true];  //array()  会返回json格式，自动json转化
-            }else{
-                return ['success'=>false];  //array()
-            }
+           $rules = [
+               'username' => 'required',
+               'password' => 'required'
+           ];
 
+           $notices = [
+               'username.required' => '用户名必须填写',
+               'password.required' => '密码必须填写'
+           ];
+
+           $validator = Validator::make($request->all(),$rules,$notices);
+
+           if($validator->passes()){
+
+               $shuju = $request->except(['_token']);
+               $shuju['password'] = bcrypt($shuju['password']);
+
+               //echo $shuju['password'];exit;
+               Manager::create($shuju);
+               return ['success'=>true];
+
+           }else{
+               $errorinfo = collect($validator->messages())->implode('0','|');
+               return ['success' => false,'errorinfo'=>$errorinfo];
+           }
 
        }else {
            return view('admin/manager/tianjia');
@@ -168,6 +253,17 @@ class ManagerController extends Controller
             return ['success' => false];
         }
 
+
+    }
+
+
+    /*
+     * 管理员退出方法
+     */
+    public function logout(){
+
+        Auth::guard('hou')->logout();
+        return redirect('admin/manager/login');
 
     }
 
