@@ -20,14 +20,14 @@ class ManagerController extends Controller
             //验证码非空、正确 校验
             $rules = [
                 'username' => 'required',
-                'password' => 'required'
-                //'verify_code' => 'required|captcha',
+                'password' => 'required',
+                'verify_code' => 'required | captcha',
             ];
             $notices = [
                 'username.required' => '用户名必填',
                 'password.required' => '密码必填',
-                //'verify_code.required' => '验证码必填',
-                //'verify_code.captcha' => '验证码不正确',
+                'verify_code.required' => '验证码必填',
+                'verify_code.captcha' => '验证码不正确',
             ];
 
             $name = $request->input('username');

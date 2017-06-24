@@ -60,9 +60,9 @@
         <div class="formControls col-xs-8 col-xs-offset-3">
           <input class="input-text size-L" type="text" placeholder="验证码" name="verify_code" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
 
-          {{--<img src="{{captcha_src()}}" alt="" onclick="this.src=this.src+'?'+Math.random()"--}}
-               {{--style="cursor:pointer;" title="更换验证码"--}}
-          {{--/>--}}
+          <img src="{{captcha_src()}}" alt="" onclick="this.src=this.src+'?'+Math.random()"
+               style="cursor:pointer;" title="更换验证码"
+          />
 
           <a id="kanbuq" href="javascript:;">看不清，换一张</a> </div>
       </div>
