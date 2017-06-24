@@ -106,9 +106,15 @@ class ManagerController extends Controller
         * return view('模板名称,模板')
         * retrun view()
         */
-        $color = ['c1'=>'111','c2'=>'2222'];
 
-        return view('admin/manager/showlist',compact('color','info'));
+        /*
+         * manager对象 -> role -> role_name
+         * ① 调用属性方式:被动方式,数据使用就立即通过sql语句查询 不使用查询
+         * ② with()方式 无论role关系是否实现,都要用sql查询出来 该方式更加节省资源
+         */
+        $info = Manager::with('role')->get();
+
+        return view('admin/manager/showlist',compact('info'));
     }
 
 
