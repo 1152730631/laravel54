@@ -16,4 +16,12 @@ class Manager extends Model
     use SoftDeletes;
     protected $abc = ['deleted_at'];
 
+    /*
+     * 创建多模型关联
+     */
+    function role(){
+        //role是关系方法名字,一般就是与其它模型名字一致,可以自定义
+        return $this->hasOne('App\Http\Models\Role','role_id','mg_role_ids');
+    }
+
 }

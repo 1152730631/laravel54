@@ -15,24 +15,45 @@ class ManagerController extends Controller
     public function login(Request $request){
 
         if($request->isMethod('post')){
-//            $username = $request->input('username');
-//            $password = $request->input('password');
-            $re = $request->only('username','password');
 
-            if(Auth::guard('hou')->attempt($re)){
-                //echo 'ok';exit;
-                return redirect('admin/index');
-            }else{
-                //echo 'on';exit;
-                /**
-                 * ① 显示错误信息
-                 * withErrors() 代表要个回跳地址传递,一次性session的错误信息
-                 * 在模板中使用$errors访问 例如{{$errors->first('errorsinfo')}}
-                 * ② 传递用户信息
-                 * withInput() 会把当前传递过来的form表单信息回传回去
-                 * 在模板中通过{{old(名称)}} 的格式来使用
-                 */
-                return redirect('admin/manager/login')->withErrors(['errorinfo'=>'用户名或密码错误'])
+            //用户名和密码 非空校验
+            //验证码非空正确校验
+
+            $rules = [
+                'username' => 'required',
+                'pussword' => 'required',
+                'verify_code' => 'required|captcha'
+            ];
+
+            $notices = [
+                'username.required' => '用户名必填',
+            ];
+
+            $validator = Validator::make($request->all(),$rules,$notices);
+
+            if($validator->passes()) {
+                //            $username = $request->input('username');
+                //            $password = $request->input('password');
+                $re = $request->only('username', 'password');
+
+                if (Auth::guard('hou')->attempt($re)) {
+                    //echo 'ok';exit;
+                    return redirect('admin/index');
+                } else {
+                    //echo 'on';exit;
+                    /**
+                     * ① 显示错误信息
+                     * withErrors() 代表要个回跳地址传递,一次性session的错误信息
+                     * 在模板中使用$errors访问 例如{{$errors->first('errorsinfo')}}
+                     * ② 传递用户信息
+                     * withInput() 会把当前传递过来的form表单信息回传回去
+                     * 在模板中通过{{old(名称)}} 的格式来使用
+                     */
+                    return redirect('admin/manager/login')->withErrors(['errorinfo' => '用户名或密码错误'])
+                        ->withInput();
+                }
+            }else {
+                return redirect('admin/manager/login')->withErrors($validator)
                     ->withInput();
             }
         }else {
@@ -182,7 +203,7 @@ class ManagerController extends Controller
 
                $shuju = $request->except(['_token']);
                $shuju['password'] = bcrypt($shuju['password']);
-
+               dd($shuju);
                //echo $shuju['password'];exit;
                Manager::create($shuju);
                return ['success'=>true];
@@ -261,6 +282,9 @@ class ManagerController extends Controller
      * 管理员退出方法
      */
     public function logout(){
+
+
+
 
         Auth::guard('hou')->logout();
         return redirect('admin/manager/login');
