@@ -27,17 +27,20 @@ Route::get('admin/manager/showlist','Admin\ManagerController@showlist');
 //后台管理员 添加
 Route::any('admin/manager/tianjia','Admin\ManagerController@tianjia');
 //后台管理员 修改
-Route::match(['get','post'],'admin/manager/xiugai/{manager}','Admin\ManagerController@xiugai')->middleware('auth:admin');
+Route::match(['get','post'],'admin/manager/xiugai/{manager}','Admin\ManagerController@xiugai');
 //后台管理员 删除
-Route::post('admin/manager/del/{manager}','Admin\ManagerController@del')->middleware('auth:admin');
+Route::post('admin/manager/del/{manager}','Admin\ManagerController@del');
 //后台管理员 首页
-Route::get('admin/index','Admin\IndexController@index')->middleware('auth:admin');
+Route::get('admin/index','Admin\IndexController@index');
 //后台管理员 首页右侧
-Route::get('admin/index/welcome','Admin\IndexController@welcome')->middleware('auth:admin');
+Route::get('admin/index/welcome','Admin\IndexController@welcome');
 
 //后台管理员:添加上传图片
 Route::post('manager/up_pic','ManagerController@up_pic');
 
+
+//课时管理--列表
+Route::match(['post','get'],'lesson/index','Admin\LessonController@index');
 
 Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
     //后台管理员登录
