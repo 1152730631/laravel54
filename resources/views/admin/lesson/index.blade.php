@@ -26,7 +26,8 @@
                 <th width="15%">图片</th>
                 <th width="7%">视频</th>
                 <th width="12%">授课老师</th>
-                <th width="13%">创建时间</th>
+                <th width="7%">创建时间</th>
+                <th width="13%">描述</th>
                 <th width="*">操作</th>
             </tr>
             </thead>
@@ -49,7 +50,7 @@
             "order": [[ 1, "desc" ]],
             "stateSave": false,//状态保存
             "columnDefs": [
-                {"targets": [0,8],"orderable": false}// 制定列不参与排序
+                {"targets": [0,9],"orderable": false}// 制定列不参与排序
             ],
 
             "lengthMenu": [ 4,8,16,32 ],
@@ -72,11 +73,12 @@
                 {'data':'a',"defaultContent": "<input type='checkbox'>"},
                 {'data':'lesson_id'},
                 {'data':'lesson_name'},
-                {'data':'course_id'},
-                {'data':'cover_img'},
+                {'data':'course.coures_name'},
+                {'data':'course.profession.pro_name'},
                 {'data':'video_address'},
                 {'data':'teacher_ids'},
                 {'data':'created_at'},
+                {'data':'lesson_desc'},
                 {'data':'b',"defaultContent": "",'className':'td-manager'},
             ],
             "createdRow":function(row,data,dataIndex){
@@ -88,7 +90,7 @@
 
                 //① 给最后td设置功能按钮
                 var anniu = '<a style="text-decoration:none" onClick="member_stop(this,10001)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a><a title="编辑" href="javascript:;" onclick="member_edit(\'编辑\',\'member-add.html\',4,\'\',510)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a><a title="删除" href="javascript:;" onclick="member_del(this,1)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
-                $(row).find('td:eq(8)').html(anniu);
+                $(row).find('td:eq(9)').html(anniu);
 
                 //② 给tr设置class属性
                 $(row).addClass('text-c');
