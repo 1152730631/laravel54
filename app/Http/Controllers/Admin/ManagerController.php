@@ -290,16 +290,29 @@ class ManagerController extends Controller
 
     }
 
+    /*
+     * 上传附件
+     */
+    public function up_pic(Request $request){
+        //接收附件并存储在服务器上
+        $file = $request->file('Filedata'); //指定文件流
+        if($file->isValid()){
+            $filename = $file->store('manager','public');
+            echo json_encode(['success' => true,
+                'filename'=>'/storage/'.$filename]);
+        }else{
+            echo json_encode(['success'=>false]);
+        }
+
+        exit;//避免后续输出信息
+    }
+
 
     /*
      * 管理员退出方法
      */
     public function logout(){
-
-
-
-
-        Auth::guard('hou')->logout();
+        Auth::guard('admin')->logout();
         return redirect('admin/manager/login');
 
     }

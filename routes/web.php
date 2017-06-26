@@ -19,25 +19,34 @@ Route::get('/','Home\IndexContriller@index');
 
 Route::get('Home/student/login','Home\StudentController@login');
 
-Route::match(['get','post'],'admin/manager/login','Admin\ManagerController@login');
+Route::match(['get','post'],'admin/manager/login','Admin\ManagerController@login')->name('login');
 
-Route::get('admin/index','Admin\IndexController@index');
 
-Route::get('admin/index/welcome','Admin\IndexController@welcome');
-
+//后台管理员 列表
 Route::get('admin/manager/showlist','Admin\ManagerController@showlist');
-//后台管理员:添加
+//后台管理员 添加
 Route::any('admin/manager/tianjia','Admin\ManagerController@tianjia');
+//后台管理员 修改
+Route::match(['get','post'],'admin/manager/xiugai/{manager}','Admin\ManagerController@xiugai')->middleware('auth:admin');
+//后台管理员 删除
+Route::post('admin/manager/del/{manager}','Admin\ManagerController@del')->middleware('auth:admin');
+//后台管理员 首页
+Route::get('admin/index','Admin\IndexController@index')->middleware('auth:admin');
+//后台管理员 首页右侧
+Route::get('admin/index/welcome','Admin\IndexController@welcome')->middleware('auth:admin');
 
-//修改管理员
-/**
- * 路由参数{manager}
- * 在控制器中要对路由的参数进行接收
- *
- */
-Route::match(['get','post'],'admin/manager/xiugai/{manager}','Admin\ManagerController@xiugai');
+//后台管理员:添加上传图片
+Route::post('manager/up_pic','ManagerController@up_pic');
 
-//后台管理员:删除`
-Route::post('admin/manager/del/{manager}','Admin\ManagerController@del');
 
+Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
+    //后台管理员登录
+
+
+    Route::group(['middleware'=>['auth:admin']],function(){
+
+
+
+    });
+});
 
