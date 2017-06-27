@@ -38,6 +38,9 @@ Route::get('admin/index/welcome','Admin\IndexController@welcome');
 //后台管理员:添加上传图片
 Route::post('manager/up_pic','ManagerController@up_pic');
 
+//后台课时管理:停用启用
+Route::post('admin/lesson/start_stop/{lesson}','Admin\LessonController@start_stop');
+
 
 //课时管理--列表
 Route::match(['post','get'],'lesson/index','Admin\LessonController@index');

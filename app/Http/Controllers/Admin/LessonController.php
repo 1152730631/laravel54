@@ -61,4 +61,31 @@ class LessonController extends Controller
         return view('admin/lesson/index');
     }
 
+
+    /*
+     * 启用停用
+     */
+    public function start_stop(Request $request,Lesson $lesson){
+        if($request->isMethod('post')){
+
+            /**
+             * 给课时做启用和停用操作
+             * $flag = 1;//停用
+             * $flag = 2;//启用操作
+             */
+            $flag = $request->input('flag');
+            $val = Lesson::$is_ok[$flag];
+
+
+
+            if($lesson->update(['is_ok'=>$val])){
+                return ['seccess' => true];
+            }else{
+                return ['success'=>false];
+            }
+
+        }
+
+    }
+
 }

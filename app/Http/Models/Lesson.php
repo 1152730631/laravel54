@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lesson extends Model
 {
+    /**
+     * 给启用停用设置标记
+     */
+    public static $is_ok = [1=>'停用',2=>'启用'];
+
     //
     protected $table = "lesson";   //设置表名
     protected $primaryKey = "lesson_id";//设置主键
@@ -19,7 +24,8 @@ class Lesson extends Model
         'video_address',
         'lesson_desc',
         'lesson_duration',
-        'teacher_ids'
+        'teacher_ids',
+        'is_ok'
     ];
 
 
