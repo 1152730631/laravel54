@@ -89,13 +89,19 @@
                 //① 给最后td设置功能按钮
                 var anniu = '';
                 //判断启用停用按钮
-                if(data.is_ok == '启用'){
-                   anniu += '<span class="label label-success radius">已启用</span> <a style="text-decoration:none" onClick="member_stop(this,'+data.lesson_id+')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>';
+//                if(data.is_ok == '启用'){
+//                   anniu += '<span class="label label-success radius">已启用</span> <a style="text-decoration:none" onClick="member_stop(this,'+data.lesson_id+')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>';
+//                }else{
+//                    anniu += '<span class="label label-danger radius">已停用</span> <a style="text-decoration:none" onClick="member_start(this,'+data.lesson_id+')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>'
+//                }
+
+                if(data.is_ok=='启用'){
+                    anniu += '<span class="label label-success radius">已启用</span>&nbsp;<a style="text-decoration:none" onClick="member_stop(this,'+data.lesson_id+')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>';
                 }else{
-                    anniu += '<span class="label label-danger radius">已停用</span> <a style="text-decoration:none" onClick="member_start(this,'+data.lesson_id+')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>'
+                    anniu += '<span class="label label-defaunt radius">已停用</span>&nbsp;<a style="text-decoration:none" onClick="member_start(this,'+data.lesson_id+')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>';
                 }
 
-                anniu += '<a style="text-decoration:none" onClick="member_stop(this,'+data.lesson_id+')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a><a title="编辑" href="javascript:;" onclick="member_edit(\'编辑\',\'member-add.html\',4,\'\',510)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a><a title="删除" href="javascript:;" onclick="member_del(this,1)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
+                anniu += '<a title="编辑" href="javascript:;" onclick="member_edit(\'编辑\',\'member-add.html\',4,\'\',510)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a><a title="删除" href="javascript:;" onclick="member_del(this,1)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
                 $(row).find('td:eq(8)').html(anniu);
 
                 //② 给tr设置class属性
@@ -127,6 +133,15 @@
 //                    $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
 //                    $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
 //                    $(obj).remove();
+
+                    //① 标志信息调换,去除旧的添加新的
+                    $(obj).parent().find('span').remove(); //删除本身的标签
+                    $(obj).parent().prepend('<span class="label label-danger radius">已停用</span>'); //添加新的标签
+
+                    //② 按钮调换
+                    $(obj).before('<a style="text-decoration:none" onClick="member_start(this,'+id+')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
+                    $(obj).remove();
+
                     layer.msg('已停用!',{icon: 1,time:1000});
                 },
                 error:function(data) {
@@ -142,13 +157,26 @@
         layer.confirm('确认要启用吗？',function(index){
             $.ajax({
                 type: 'POST',
-                url: '',
+                url: '{{ url('admin/lesson/start_stop') }}' + '/'+ id,
                 dataType: 'json',
+                data:{'flag':2},
+                headers:{
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
                 success: function(data){
-                    $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
-                    $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
+//                    $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
+//                    $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
+//                    $(obj).remove();
+
+                    //① 标志信息调换,去除旧的添加新的
+                    $(obj).parent().find('span').remove(); //删除本身的标签
+                    $(obj).parent().prepend('<span class="label label-success radius">已启用</span>'); //添加新的标签
+
+                    //② 按钮调换
+                    $(obj).before('<a style="text-decoration:none" onClick="member_stop(this,'+id+')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
                     $(obj).remove();
-                    layer.msg('已启用!',{icon: 6,time:1000});
+
+                    layer.msg('已启用!',{icon: 1,time:1000});
                 },
                 error:function(data) {
                     console.log(data.msg);
