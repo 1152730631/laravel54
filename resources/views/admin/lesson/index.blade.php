@@ -45,7 +45,7 @@
 <script type="text/javascript" src="/admin/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
     $(function(){
-        $('.table-sort').dataTable({
+        mydatatable = $('.table-sort').dataTable({
             "order": [[ 1, "desc" ]],
             "stateSave": false,//状态保存
             "columnDefs": [
@@ -73,8 +73,10 @@
                 {'data':'lesson_id'},
                 {'data':'lesson_name'},
                 {'data':'course.coures_name'},
-                {'data':'course.profession.pro_name'},
-                {'data':'video_address'},
+                {"defaultContent": ""},
+                {"defaultContent": ""},
+                //{'data':'course.profession.pro_name'},
+                //{'data':'video_address'},
                 {'data':'teacher_ids'},
                 {'data':'created_at'},
                 {'data':'b',"defaultContent": "",'className':'td-manager'},
@@ -101,15 +103,30 @@
                     anniu += '<span class="label label-defaunt radius">已停用</span>&nbsp;<a style="text-decoration:none" onClick="lesson_start(this,'+data.lesson_id+')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>';
                 }
 
-                anniu += '<a title="编辑" href="javascript:;" onclick="lesson_edit(\'编辑\',\'lesson-add.html\',4,\'\',510)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a><a title="删除" href="javascript:;" onclick="lesson_del(this,1)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
+                anniu += '<a title="编辑" href="javascript:;" onclick="lesson_edit(\'编辑\',\'/admin/lesson/xiugai/'+data.lesson_id+'\',4,\'\',510)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a><a title="删除" href="javascript:;" onclick="lesson_del(this,1)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
                 $(row).find('td:eq(8)').html(anniu);
 
                 //② 给tr设置class属性
                 $(row).addClass('text-c');
+
+                //③ 制作封面图显示
+                var img = "<img src='"+data.cover_img+"' alt='没有图片' width='200' height='100' />";
+                $(row).find('td:eq(4)').html(img);
+
+                //④ 制作播放按钮
+                var btn = '<input class="btn btn-success-outline radius" onclick="play_video(\'播放视频\',\'/admin/lesson/play/'+data.lesson_id+'\',\'\',510)" type="button" value="播放">';
+                $(row).find('td:eq(5)').html(btn);
+
             },
         });
 
     });
+
+    /*播放视频*/
+    function play_video(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+
     /*课时-添加*/
     function lesson_add(title,url,w,h){
         layer_show(title,url,w,h);

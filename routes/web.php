@@ -45,12 +45,22 @@ Route::post('admin/lesson/start_stop/{lesson}','Admin\LessonController@start_sto
 Route::match(['get','post'],'admin/lesson/tianjia','Admin\LessonController@tianjia');
 
 
+//后台课时管理:上传视频
+Route::post('admin/lesson/up_video','Admin\LessonController@up_video');
+//后台课时管理:上传图片
+Route::post('admin/lesson/up_pic','Admin\LessonController@up_pic');
+
+//后台课时管理:播放视频
+Route::get('admin/lesson/play/{lesson}','Admin\LessonController@play');
+
+//后台课时管理:修改
+Route::match(['get','post'],'admin/lesson/xiugai/{lesson}','Admin\LessonController@xiugai');
+
 //课时管理--列表
 Route::match(['post','get'],'lesson/index','Admin\LessonController@index');
 
-Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
-    //后台管理员登录
 
+Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
     Route::group(['middleware'=>['auth:admin']],function(){
 
     });

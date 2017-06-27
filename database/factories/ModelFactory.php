@@ -22,3 +22,18 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Http\Models\Teacher::class,function(Faker\Generator $faker){
+    //$faker = \Faker\Factory::create('zh_CN'); 
+    $date_time = $faker->date." ".$faker->time;
+
+    return [
+        'teacher_name' => $faker->name,
+        'teacher_phone' => $faker->phoneNumber . '',
+        'teacher_email' => $faker->email,
+        'teacher_desc' => '木叶最强',
+        'teacher_pic' => 'zzz',
+        'teacher_pic' => 'xxx'
+    ];
+
+});

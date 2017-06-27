@@ -13,7 +13,7 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>课时名称：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" value="" placeholder="" id="lesson_name" name="lesson_name">
+                    <input type="text" class="input-text" placeholder="" id="lesson_name" name="lesson_name" value="{{$lesson->lesson_name}}" />
                 </div>
             </div>
             <div class="row cl">
@@ -22,7 +22,11 @@
                     <select name="course_id">
                         <option value="">-请选择-</option>
                         @foreach($course as $k => $v)
-                            <option value="{{$k}}">{{$v}}</option>
+                            @if($lesson->course_id === $k)
+                                <option value="{{$k}}" selected="selected">{{$v}}</option>
+                            @else
+                                <option value="{{$k}}">{{$v}}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -40,7 +44,9 @@
                 </div>
                 <label class="form-label col-xs-4 col-sm-3"></label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" readonly="readonly" name="video_address" />
+                    <input type="text" class="input-text" readonly="readonly" name="video_address"
+                           value="{{$lesson->video_address}}"
+                    />
                 </div>
             </div>
             <script type="text/javascript">
@@ -79,11 +85,13 @@
                 </div>
                 <label class="form-label col-xs-4 col-sm-3"></label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <img src="" alt="" id="show_cover_img" width="200" height="100" />
+                    <img src="{{$lesson->cover_img}}" alt="" id="show_cover_img" width="200" height="100" />
                 </div>
                 <label class="form-label col-xs-4 col-sm-3"></label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" id="cover_img" name="cover_img" readonly="readonly" />
+                    <input type="text" class="input-text" id="cover_img" name="cover_img" readonly="readonly"
+                           value="{{$lesson->cover_img}}"
+                    />
                 </div>
             </div>
             <script type="text/javascript">
@@ -119,14 +127,14 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3">课时描述：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <textarea name="lesson_desc" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" onKeyUp="$.Huitextarealength(this,100)"></textarea>
+                    <textarea name="lesson_desc" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" onKeyUp="$.Huitextarealength(this,100)">{{$lesson->lesson_desc}}</textarea>
                     <p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3">时长：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="number" class="input-text" value="" placeholder="" id="lesson_duration" name="lesson_duration">
+                    <input type="number" class="input-text" placeholder="" id="lesson_duration" name="lesson_duration"  value="{{$lesson->lesson_duration}}" />
                     分钟
                 </div>
             </div>
@@ -140,16 +148,23 @@
                 <label class="form-label col-xs-4 col-sm-3">启用/停用：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <div class="radio-box">
-                        <input name="sex" type="radio" value="启用" id="sex-1" checked>
+                        <input name="is_ok" type="radio" value="启用" id="sex-1"
+                               @if($lesson->is_ok=='启用')
+                               checked="checked"
+                                @endif
+                        />
                         <label for="sex-1">启用</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" id="sex-2" value="停用" name="sex">
+                        <input type="radio" id="sex-2" value="停用" name="is_ok"
+                               @if($lesson->is_ok=='停用')
+                               checked="checked"
+                                @endif
+                        />
                         <label for="sex-2">停用</label>
                     </div>
                 </div>
             </div>
-
 
             <div class="row cl">
                 <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
@@ -186,7 +201,7 @@
 
                 //ajax提交
                 $.ajax({
-                    url:'{{url("admin/lesson/tianjia")}}',
+                    url:'{{url("admin/lesson/xiugai")}}'+'/'+'{{$lesson->lesson_id}}',
                     data:shuju,
                     dataType:'json',
                     type:'post',
@@ -195,13 +210,13 @@
                             //alert('添加课时成功');
                             //layer.msg('添加课时成功!',{icon:1,time:1000});
 
-                            layer.alert('添加课时成功', function(index){
+                            layer.alert('修改课时成功', function(index){
                                 parent.mydatatable.api().ajax.reload();//刷新父页面,即刷新datatable
                                 layer_close();//关闭当前弹出层
                             });
                         }else{
                             //alert('添加课时失败【'+msg.errorinfo+'】');
-                            layer.alert('添加课时失败【'+msg.errorinfo+'】',{icon:5});
+                            layer.alert('修改课时失败【'+msg.errorinfo+'】',{icon:5});
                         }
                     }
                 });
