@@ -5,16 +5,16 @@
 @section('content')
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户中心 <span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 课时中心 <span class="c-gray en">&gt;</span> 课时管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
     <div class="text-c"> 日期范围：
         <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate" style="width:120px;">
         -
         <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate" style="width:120px;">
         <input type="text" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="" name="">
-        <button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+        <button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜课时</button>
     </div>
-    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加用户','member-add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a></span> <span class="r">共有数据：<strong>88</strong> 条</span> </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="lesson_add('添加课时','{{ url('admin/lesson/tianjia') }}','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加课时</a></span> <span class="r">共有数据：<strong>88</strong> 条</span> </div>
     <div class="mt-20">
         <table class="table table-border table-bordered table-hover table-bg table-sort">
             <thead>
@@ -90,18 +90,18 @@
                 var anniu = '';
                 //判断启用停用按钮
 //                if(data.is_ok == '启用'){
-//                   anniu += '<span class="label label-success radius">已启用</span> <a style="text-decoration:none" onClick="member_stop(this,'+data.lesson_id+')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>';
+//                   anniu += '<span class="label label-success radius">已启用</span> <a style="text-decoration:none" onClick="lesson_stop(this,'+data.lesson_id+')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>';
 //                }else{
-//                    anniu += '<span class="label label-danger radius">已停用</span> <a style="text-decoration:none" onClick="member_start(this,'+data.lesson_id+')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>'
+//                    anniu += '<span class="label label-danger radius">已停用</span> <a style="text-decoration:none" onClick="lesson_start(this,'+data.lesson_id+')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>'
 //                }
 
                 if(data.is_ok=='启用'){
-                    anniu += '<span class="label label-success radius">已启用</span>&nbsp;<a style="text-decoration:none" onClick="member_stop(this,'+data.lesson_id+')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>';
+                    anniu += '<span class="label label-success radius">已启用</span>&nbsp;<a style="text-decoration:none" onClick="lesson_stop(this,'+data.lesson_id+')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>';
                 }else{
-                    anniu += '<span class="label label-defaunt radius">已停用</span>&nbsp;<a style="text-decoration:none" onClick="member_start(this,'+data.lesson_id+')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>';
+                    anniu += '<span class="label label-defaunt radius">已停用</span>&nbsp;<a style="text-decoration:none" onClick="lesson_start(this,'+data.lesson_id+')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>';
                 }
 
-                anniu += '<a title="编辑" href="javascript:;" onclick="member_edit(\'编辑\',\'member-add.html\',4,\'\',510)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a><a title="删除" href="javascript:;" onclick="member_del(this,1)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
+                anniu += '<a title="编辑" href="javascript:;" onclick="lesson_edit(\'编辑\',\'lesson-add.html\',4,\'\',510)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a><a title="删除" href="javascript:;" onclick="lesson_del(this,1)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
                 $(row).find('td:eq(8)').html(anniu);
 
                 //② 给tr设置class属性
@@ -110,16 +110,16 @@
         });
 
     });
-    /*用户-添加*/
-    function member_add(title,url,w,h){
+    /*课时-添加*/
+    function lesson_add(title,url,w,h){
         layer_show(title,url,w,h);
     }
-    /*用户-查看*/
-    function member_show(title,url,id,w,h){
+    /*课时-查看*/
+    function lesson_show(title,url,id,w,h){
         layer_show(title,url,w,h);
     }
-    /*用户-停用*/
-    function member_stop(obj,id){
+    /*课时-停用*/
+    function lesson_stop(obj,id){
         layer.confirm('确认要停用吗？',function(index){
             $.ajax({
                 type: 'POST',
@@ -130,7 +130,7 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 success: function(data){
-//                    $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
+//                    $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="lesson_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
 //                    $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
 //                    $(obj).remove();
 
@@ -139,7 +139,7 @@
                     $(obj).parent().prepend('<span class="label label-danger radius">已停用</span>'); //添加新的标签
 
                     //② 按钮调换
-                    $(obj).before('<a style="text-decoration:none" onClick="member_start(this,'+id+')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
+                    $(obj).before('<a style="text-decoration:none" onClick="lesson_start(this,'+id+')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
                     $(obj).remove();
 
                     layer.msg('已停用!',{icon: 1,time:1000});
@@ -151,9 +151,9 @@
         });
     }
 
-    /*用户-启用*/
+    /*课时-启用*/
 //    <span class="label label-success radius">已启用</span>
-    function member_start(obj,id){
+    function lesson_start(obj,id){
         layer.confirm('确认要启用吗？',function(index){
             $.ajax({
                 type: 'POST',
@@ -164,7 +164,7 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 success: function(data){
-//                    $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
+//                    $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="lesson_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
 //                    $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
 //                    $(obj).remove();
 
@@ -173,7 +173,7 @@
                     $(obj).parent().prepend('<span class="label label-success radius">已启用</span>'); //添加新的标签
 
                     //② 按钮调换
-                    $(obj).before('<a style="text-decoration:none" onClick="member_stop(this,'+id+')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
+                    $(obj).before('<a style="text-decoration:none" onClick="lesson_stop(this,'+id+')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
                     $(obj).remove();
 
                     layer.msg('已启用!',{icon: 1,time:1000});
@@ -184,16 +184,16 @@
             });
         });
     }
-    /*用户-编辑*/
-    function member_edit(title,url,id,w,h){
+    /*课时-编辑*/
+    function lesson_edit(title,url,id,w,h){
         layer_show(title,url,w,h);
     }
     /*密码-修改*/
     function change_password(title,url,id,w,h){
         layer_show(title,url,w,h);
     }
-    /*用户-删除*/
-    function member_del(obj,id){
+    /*课时-删除*/
+    function lesson_del(obj,id){
         layer.confirm('确认要删除吗？',function(index){
             $.ajax({
                 type: 'POST',

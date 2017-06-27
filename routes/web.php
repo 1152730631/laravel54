@@ -41,6 +41,9 @@ Route::post('manager/up_pic','ManagerController@up_pic');
 //后台课时管理:停用启用
 Route::post('admin/lesson/start_stop/{lesson}','Admin\LessonController@start_stop');
 
+//后台课时管理:添加课时
+Route::match(['get','post'],'admin/lesson/tianjia','Admin\LessonController@tianjia');
+
 
 //课时管理--列表
 Route::match(['post','get'],'lesson/index','Admin\LessonController@index');
@@ -48,10 +51,7 @@ Route::match(['post','get'],'lesson/index','Admin\LessonController@index');
 Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
     //后台管理员登录
 
-
     Route::group(['middleware'=>['auth:admin']],function(){
-
-
 
     });
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Models\Lesson;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class LessonController extends Controller
 {
@@ -86,6 +87,39 @@ class LessonController extends Controller
 
         }
 
+    }
+
+    /*
+     * 添加课时
+     */
+    public function tianjia(Request $request){
+        if($request->isMethod('post')){
+
+            //验证
+            $rules = [
+
+                'lesson_name' => 'required',
+                'course_id' => 'required',
+            ];
+
+            $notices = [
+              'lesson_name.required' => '课时名称必填',
+              'course_id.required' => '课程必选'
+            ];
+
+             $validator = Validator::make($request->all(),$rules,$notices);
+
+            if($validator->passes()){
+                //数据存储
+                Lesson::create($request->all());
+                return ['success' => true];
+            }else{
+                $errorinfo = collect($validator->messages())->implode('0','|');
+                return ['success'=>false,'errorinfo'=>$errorinfo];
+            }
+        }
+
+        return view('admin/lesson/tianjia');
     }
 
 }
