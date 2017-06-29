@@ -180,6 +180,9 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
 
+        //七牛接口
+        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class
+
     ],
 
     /*

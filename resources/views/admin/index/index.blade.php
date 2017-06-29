@@ -93,6 +93,8 @@
 			<dd>
 				<ul>
 					<li><a data-href="{{url('lesson/index')}}" data-title="课时管理" href="javascript:void(0)">课时管理</a></li>
+					<li><a data-href="{{url('admin/stream/index')}}" data-title="直播流管理" href="javascript:void(0)">直播流管理</a></li>
+					<li><a data-href="{{url('admin/livecourse/index')}}" data-title="直播课程管理" href="javascript:void(0)">直播课程管理</a></li>
 					<li><a data-href="product-brand.html" data-title="品牌管理" href="javascript:void(0)">品牌管理</a></li>
 					<li><a data-href="product-category.html" data-title="分类管理" href="javascript:void(0)">分类管理</a></li>
 					<li><a data-href="product-list.html" data-title="产品管理" href="javascript:void(0)">产品管理</a></li>
