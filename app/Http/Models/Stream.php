@@ -14,6 +14,6 @@ class Stream extends Model
 
     //设置软删除
     use SoftDeletes;
-    protected $dates = ['stream_name'];
+    protected $dates = ['deleted_at'];
 
 }

@@ -60,10 +60,10 @@ Route::match(['get','post'],'admin/lesson/xiugai/{lesson}','Admin\LessonControll
 Route::match(['post','get'],'lesson/index','Admin\LessonController@index');
 
 //直播流--添加
-Route::match(['get','post'],'admin/stream/tianjia','Admin\StreamController@tianjia');
-
+Route::match(['get','post'],'admin/stream/tianjia','Admin\StreamController@tianjin');
 //直播流--列表显示
 Route::get("admin/stream/index",'Admin\StreamController@index');
+
 
 Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
     Route::group(['middleware'=>['auth:admin']],function(){
