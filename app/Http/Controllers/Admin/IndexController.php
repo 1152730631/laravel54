@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Mockery\CountValidator\Exception;
 
 class IndexController extends Controller
 {
@@ -11,49 +12,43 @@ class IndexController extends Controller
     public function index(){
 
         //获得当前登录系统管理员对应的全部的权限信息
-        //$mg_id = \Auth::guard('admin');
-        $mg_id = \Auth::guard('admin')->user();
+        $mg_id = \Auth::guard('admin')->user()->mg_id;
 
-        dd($mg_id);exit;
-        //获取角色的信息
-        //join('role as r',主表联系字段,'=',当前表联系字段)
-        $roleinfo = \DB::table('manager as m')->
-            join('role as r','m.mg_role_ids','=','r.role_id')->
-            select('role_permission_ids')->
-            where('m.mg_id',$mg_id)->
-            firsh();
+         $roleinfo = \DB::table('manager as m')->
+                join('role as r','m.mg_role_ids','=','r.role_id')->
+                select('role_permission_ids')->
+                where('mg_id',$mg_id)->
+                first();
 
-        try{
-            //有正确分配角色的普通管理员
-            $permission_ids = explode(',',$roleinfo->role_permission_ids);
+        try {
+            //正常情况下获取数据
 
-            //一级的
+            $role_permission_ids = explode(',', $roleinfo->role_permission_ids);
+
             $permissionA = \DB::table('permission')->
-                whereIn('ps_id',$permission_ids)->
-                where('ps_level','0')->
-                get();
+            whereIn('ps_id', $role_permission_ids)->
+            where('ps_level', '0')->
+            get();
 
-            //二级的
             $permissionB = \DB::table('permission')->
-                whereIn('ps_id',$permission_ids)->
-                where('ps_level','1')->
-                get();
+            whereIn('ps_id', $role_permission_ids)->
+            where('ps_level', '1')->
+            get();
+
 
         }catch(\Exception $e){
-
-            //超级管理员权限
+            //超级管理员情况下获取
             if($mg_id == 3){
-
-                //一级
+                //超级管理员全部权限
+                //一级的
                 $permissionA = \DB::table('permission')->
-                    whereIn('ps_level','0')->
+                    where('ps_level','0')->
                     get();
-                //二级
+                //二级的
                 $permissionB = \DB::table('permission')->
-                    whereIn('ps_level','1')->
+                    where('ps_level','1')->
                     get();
-            }else{
-                //② 未分配角色
+            }else {
                 $permissionA = [];
                 $permissionB = [];
             }
