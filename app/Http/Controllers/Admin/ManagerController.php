@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Validator;
 class ManagerController extends Controller
 {
 
+    /**
+     * @return string
+     * 管理员登录
+     */
     public function login(Request $request)
     {
         if($request->isMethod('post')){
@@ -21,7 +25,7 @@ class ManagerController extends Controller
             $rules = [
                 'username' => 'required',
                 'password' => 'required',
-                'verify_code' => 'required | captcha',
+                'verify_code' => 'required|captcha',
             ];
             $notices = [
                 'username.required' => '用户名必填',
@@ -30,13 +34,8 @@ class ManagerController extends Controller
                 'verify_code.captcha' => '验证码不正确',
             ];
 
-            $name = $request->input('username');
-            $pwd  = $request->input('password');
-
-
-
             //制作验证
-            $validator = Validator::make(['username'=>$name,'password'=>$pwd],$rules,$notices);
+            $validator = Validator::make($request->all(),$rules,$notices);
             //判断验证
             if($validator->passes()){
                 //去数据库校验用户名和密码
@@ -44,7 +43,7 @@ class ManagerController extends Controller
                 $pwd  = $request->input('password');
                 //Auth限定使用的guard，并调用attempt()方法校验用户名和密码
                 if(Auth::guard('admin')->attempt(['username'=>$name,'password'=>$pwd])){
-                    return redirect('admin/index');
+                    return redirect('admin/index/index');
                 }else{
                     return redirect('admin/manager/login')
                         ->withErrors(['errorinfo'=>'用户名或密码错误'])
@@ -59,6 +58,12 @@ class ManagerController extends Controller
         }else{
             return view('admin/manager/login');
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('admin')->logout();
+        return redirect('admin/manager/login');
     }
 
 
@@ -305,16 +310,6 @@ class ManagerController extends Controller
         }
 
         exit;//避免后续输出信息
-    }
-
-
-    /*
-     * 管理员退出方法
-     */
-    public function logout(){
-        Auth::guard('admin')->logout();
-        return redirect('admin/manager/login');
-
     }
 
 }
