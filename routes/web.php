@@ -22,6 +22,15 @@ Route::get('Home/student/login','Home\StudentController@login');
 Route::match(['get','post'],'admin/manager/login','Admin\ManagerController@login')->name('login');
 
 
+
+Route::group(['prefix'=>'home','namespace'=>'Home'],function(){
+    //前台首页面--学员登录
+    Route::get('student/login','StudentController@login');
+
+    //前台个人中心--课程展示
+    Route::get('person/course','PersonController@course');
+});
+
 //后台管理员 列表
 Route::get('admin/manager/showlist','Admin\ManagerController@showlist');
 //后台管理员 添加
@@ -63,6 +72,15 @@ Route::match(['post','get'],'lesson/index','Admin\LessonController@index');
 Route::match(['get','post'],'admin/stream/tianjia','Admin\StreamController@tianjin');
 //直播流--列表显示
 Route::get("admin/stream/index",'Admin\StreamController@index');
+
+//直播课程表--列表
+Route::get("admin/livecourse/index",'Admin\LivecourseController@index');
+
+//直播课程表--添加
+Route::match(['get','post'],'admin/livecourse/tianjia','Admin\LivecourseController@tianjia');
+
+
+//Route::match(['get','post'],"admin/livecourse/index","");
 
 
 Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
