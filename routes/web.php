@@ -138,6 +138,8 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
         //角色列表展示
         Route::get('role/index','RoleController@index');
 
+        //修改角色
+        Route::match(['get','post'],"role/xiugai/{role}",'RoleController@xiugai');
 
     });
 });

@@ -10,7 +10,7 @@ class Role extends Model
     protected $table = 'role';
     protected $primaryKey = 'role_id';
 
-    protected $fillable = ['role_name','role_auth_ids','role_auth_ac'];
+    protected $fillable = ['role_name','role_permission_ids','role_permission_ac'];
 
     /*
      * [建立Role Manager 1对多关系]
