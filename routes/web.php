@@ -135,6 +135,9 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
         //直播课程--获得推流地址
         Route::get('livecourse/getpush/{stream}/{livecourse}','LivecourseController@getpush');
 
+        //角色列表展示
+        Route::get('role/index','RoleController@index');
+
 
     });
 });
