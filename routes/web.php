@@ -141,6 +141,9 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
         //修改角色
         Route::match(['get','post'],"role/xiugai/{role}",'RoleController@xiugai');
 
+        //用户权限列表展示
+        Route::get('permission/index','PermissionController@index');
+
     });
 });
 
