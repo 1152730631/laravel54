@@ -11,13 +11,10 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
 
 Route::get('/','Home\IndexContriller@index');
 
-Route::get('Home/student/login','Home\StudentController@login');
+Route::match(['get','post'],'home/student/login','Home\StudentController@login');
 
 Route::match(['get','post'],'admin/manager/login','Admin\ManagerController@login')->name('login');
 

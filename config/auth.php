@@ -49,6 +49,11 @@ return [
         'admin' => [
             'driver' => 'session',
             'provider' => 'mag',
+        ],
+
+        'home' => [
+            'driver' => 'session',
+            'provider' => 'qian',
         ]
     ],
 
@@ -84,6 +89,11 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+        'qian' => [
+            'driver' => 'eloquent',
+            'model' => App\Http\Models\Student::class,
+        ],
     ],
 
     /*
