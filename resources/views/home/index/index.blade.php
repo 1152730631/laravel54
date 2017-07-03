@@ -109,44 +109,44 @@
         </div>
     </div>
     <div class="conten-list">
-        {{--@foreach($course as $v)--}}
-        {{--<div class="conten" id="a">--}}
-            {{--<div class="row text-center top">--}}
-                {{--<div class="col-lg-3 text-left" id="Title">{{$v->course_name}}</div>--}}
-                {{--<div class="col-lg-5 ">--}}
-                    {{--<div class="btn-group btn-group-justified">--}}
-                        {{--<a href="#" class="btn btn-primary active">热 门</a>--}}
-                        {{--<a href="#" class="btn btn-primary">初 级</a>--}}
-                        {{--<a href="#" class="btn btn-primary">中 级</a>--}}
-                        {{--<a href="#" class="btn btn-primary">高 级</a>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="col-lg-3 text-right">--}}
+        @foreach($course as $v)
+        <div class="conten" id="a">
+            <div class="row text-center top">
+                <div class="col-lg-3 text-left" id="Title">{{$v->course_name}}</div>
+                <div class="col-lg-5 ">
+                    <div class="btn-group btn-group-justified">
+                        <a href="#" class="btn btn-primary active">热 门</a>
+                        <a href="#" class="btn btn-primary">初 级</a>
+                        <a href="#" class="btn btn-primary">中 级</a>
+                        <a href="#" class="btn btn-primary">高 级</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 text-right">
 
-{{--<a href="{{url('home/course/detail',['course'=>$v->course_id])}}" class="btn btn-default ck-all" target="_blank">查看全部</a>--}}
+<a href="{{url('home/course/detail',['course'=>$v->course_id])}}" class="btn btn-default ck-all" target="_blank">查看全部</a>
 
-                {{--</div>--}}
-            {{--</div>--}}
-            {{--<div class="container cont-list">--}}
-                {{--<div class="cont-list-roll">--}}
-                    {{--<div class="next glyphicon glyphicon-chevron-right"></div>--}}
-                    {{--<div class="prev glyphicon glyphicon-chevron-left"></div>--}}
-                    {{--<div class="cont-list-box">--}}
-                        {{--@foreach($v->lesson as $vv)--}}
-                        {{--@if($loop->index<5)--}}
-                        {{--<li class="">--}}
-                            {{--<img src="{{$vv->cover_img}}" alt="AA">--}}
-                            {{--<div class="tit">{{$vv->lesson_name}} <span>高</span></div>--}}
-                            {{--<div>武汉大学</div>--}}
-                            {{--<div>1门课程</div>--}}
-                        {{--</li>--}}
-                        {{--@endif--}}
-                        {{--@endforeach--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-        {{--@endforeach--}}
+                </div>
+            </div>
+            <div class="container cont-list">
+                <div class="cont-list-roll">
+                    <div class="next glyphicon glyphicon-chevron-right"></div>
+                    <div class="prev glyphicon glyphicon-chevron-left"></div>
+                    <div class="cont-list-box">
+                        @foreach($v->lesson as $vv)
+                        @if($loop->index<5)
+                        <li class="">
+                            <img src="{{$vv->cover_img}}" alt="AA">
+                            <div class="tit">{{$vv->lesson_name}} <span>高</span></div>
+                            <div>武汉大学</div>
+                            <div>1门课程</div>
+                        </li>
+                        @endif
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
     </div>
 </div>
 <div class="index-cont-nav">

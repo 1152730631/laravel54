@@ -57,6 +57,8 @@ class LessonController extends Controller
                 'recordsFiltered' => $cnt,
                 'data' => $info,
             ];
+
+
         }
 
         //② 展示列表页面

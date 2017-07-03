@@ -29,4 +29,11 @@ class Course extends Model
         return $this->hasOne('App\Http\Models\Profession','pro_id','pro_id');
     }
 
+    /*
+     * 建立与[课程 课时]的1对多关系
+     */
+    public function lesson(){
+        return $this->hasMany('App\Http\Models\Lesson','course_id','course_id');
+    }
+
 }
