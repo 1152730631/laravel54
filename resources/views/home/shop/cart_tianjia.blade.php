@@ -13,8 +13,8 @@
 <div class="row">
     <div class="col-lg-2"><img src="{{$course->cover_img}}" alt=""></div>
     <div class="col-lg-9">
-        <p>名称：{{$course->course_name}} <em>北京大学</em></p>
-        <p>描述：{{$course->course_desc}}</p>
+        <p>名称：{{$course->coures_name}} <em>北京大学</em></p>
+        <p>描述：{{$course->coures_desc}}</p>
     </div>
     <div class="col-lg-1">￥{{$course->course_price}}</div>
     <p>

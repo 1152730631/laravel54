@@ -21,4 +21,16 @@ class ShopController extends Controller
         $cart->add($info);
         return view('home/shop/cart_tianjia',compact('course'));
     }
+
+    //将购物车内容展示出来
+    public function cart_account(Request $request)
+    {
+        //获得购物车课程信息
+        $cart = new Cart();
+        $info = $cart->getCartInfo();
+        //获取购物车课程总数量,总价格
+        $numberprice = $cart->getNumberPrice();
+        return view('home/shop/cart_account',compact('info','numberprice'));
+
+    }
 }

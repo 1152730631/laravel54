@@ -32,6 +32,9 @@ Route::group(['prefix'=>'home','namespace'=>'Home'],function(){
 
     //管理--添加课程到购物车
     Route::get('shop/cart_tianjia/{course}','ShopController@cart_tianjia');
+
+    //查看--购物车逻辑
+    Route::match(['get','post'],'shop/cart_account','ShopController@cart_account');
 });
 
 
