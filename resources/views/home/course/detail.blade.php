@@ -8,10 +8,10 @@
         <div class="table-responsive learing-list">
             <table class="table">
                 <tr><td class="btn-group" width="40%">名称：{{$course->coures_name}}</td>
-                    <td class="btn-group" width="*">价格：{{$course->course_price}}</td>
+                    <td class="btn-group" width="*">价格：{{$course->coures_price}}</td>
                 </tr>
                 <tr><td class="btn-group" width="40%">专业：{{$course->profession->pro_name}}</td>
-                    <td class="btn-group" width="*">描述：{{$course->course_desc}}</td>
+                    <td class="btn-group" width="*">描述：{{$course->coures_desc}}</td>
                 </tr>
                 <tr><td class="btn-group" width="40%">封面图：<img src="{{$course->cover_img}}" alt="" width='200' height='120'/></td>
                     <td class="btn-group" width="*"></td>

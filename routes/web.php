@@ -30,6 +30,8 @@ Route::group(['prefix'=>'home','namespace'=>'Home'],function(){
     //查看课程详细
     Route::get('course/detail/{course}','CourseController@detail');
 
+    //管理--添加课程到购物车
+    Route::get('shop/cart_tianjia/{course}','ShopController@cart_tianjia');
 });
 
 
