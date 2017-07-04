@@ -24,6 +24,9 @@ Route::group(['prefix'=>'home','namespace'=>'Home'],function(){
     //前台首页面--学员登录
     Route::get('student/login','StudentController@login');
 
+    //前台首界面--学院退出
+    Route::get('student/logout','StudentController@logout');
+
     //前台个人中心--课程展示
     Route::get('person/course','PersonController@course');
 
@@ -35,6 +38,9 @@ Route::group(['prefix'=>'home','namespace'=>'Home'],function(){
 
     //查看--购物车逻辑
     Route::match(['get','post'],'shop/cart_account','ShopController@cart_account');
+
+    //购物车结算
+    Route::get('shop/cart_jiesuan','ShopController@cart_jiesuan');
 });
 
 

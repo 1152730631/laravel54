@@ -47,4 +47,12 @@ class StudentController extends Controller
 
         return view("home/student/login");
     }
+
+    /*
+     * 用户退出系统
+     */
+    public function logout(){
+        Auth::guard('home')->logout();
+        return redirect('/');
+    }
 }
