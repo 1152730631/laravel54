@@ -20,7 +20,8 @@
     },
     "autoload": {
         "classmap": [
-            "database"
+            "database",
+            "app/Tools/Cart.php"
         ],
         "psr-4": {
             "App\\": "app/"

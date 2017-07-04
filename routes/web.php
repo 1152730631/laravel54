@@ -26,6 +26,10 @@ Route::group(['prefix'=>'home','namespace'=>'Home'],function(){
 
     //前台个人中心--课程展示
     Route::get('person/course','PersonController@course');
+
+    //查看课程详细
+    Route::get('course/detail/{course}','CourseController@detail');
+
 });
 
 
