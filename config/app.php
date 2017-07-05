@@ -181,7 +181,9 @@ return [
         Mews\Captcha\CaptchaServiceProvider::class,
 
         //七牛接口
-        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class
+        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
+        //支付宝
+        EchoBool\AlipayLaravel\AlipayServiceProvider::class,
 
     ],
 

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e22d3deb6c0a07bf5dd3dc4dde6263fc",
-    "content-hash": "e6af7565011e2fa80bd59d318bc99e9d",
+    "hash": "9a388a36926eb83b1b19357bc4288ad5",
+    "content-hash": "54d9dd4a828c2405eed20046afaada4c",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -168,6 +168,52 @@
                 "string"
             ],
             "time": "2015-11-06 14:35:42"
+        },
+        {
+            "name": "echobool/alipay-laravel5",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/echobool/alipay-laravel5.git",
+                "reference": "33c578cb4bce0835e9bb652b79f838daf13b5496"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/echobool/alipay-laravel5/33c578cb4bce0835e9bb652b79f838daf13b5496.zip",
+                "reference": "33c578cb4bce0835e9bb652b79f838daf13b5496",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "5.*",
+                "illuminate/support": "5.*",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EchoBool\\AlipayLaravel\\": "src/EchoBool/AlipayLaravel/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "luojinyi",
+                    "email": "40281612@qq.com"
+                }
+            ],
+            "keywords": [
+                "Alipay SDK",
+                "alipay",
+                "l5",
+                "laravel",
+                "laravel 5",
+                "支付宝",
+                "电脑网站支付"
+            ],
+            "time": "2017-07-02 04:32:50"
         },
         {
             "name": "erusev/parsedown",
@@ -3938,7 +3984,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "echobool/alipay-laravel5": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

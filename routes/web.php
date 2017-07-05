@@ -41,6 +41,9 @@ Route::group(['prefix'=>'home','namespace'=>'Home'],function(){
 
     //购物车结算
     Route::get('shop/cart_jiesuan','ShopController@cart_jiesuan');
+
+
+
 });
 
 
@@ -113,6 +116,8 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
             //添加用户权限
             Route::match(['get','post'],'permission/tianjia','PermissionController@tianjia');
 
+            //试卷管理
+            Route::get('paper/index','PaperController@index');
         });
     });
 });

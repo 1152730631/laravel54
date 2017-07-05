@@ -47,10 +47,10 @@ class Cart{
         if(!empty($this->cartInfo) && array_key_exists($course_id, $this->cartInfo)){
             exit('课程不能重复购买！');
         } else {
-            $this -> cartInfo[$course_id] = $course;
+            $this->cartInfo[$course_id] = $course;
         }
 
-        $this -> saveData();//将刷新的数据重新存入session
+        $this->saveData();//将刷新的数据重新存入session
     }
 
     /***
